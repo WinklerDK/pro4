@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>The Walking Dead</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+
+
+<style>
+#map {
+    position: fixed;
+    width:50%;
+}
+#features {
+    width: 50%;
+    margin-left: 50%;
+    font-family: sans-serif;
+    overflow-y: scroll;
+    background-color: #fafafa;
+}
+section {
+    padding:  25px 50px;
+    line-height: 25px;
+    border-bottom: 1px solid #ddd;
+    opacity: 0.25;
+    font-size: 13px;
+}
+section.active {
+    opacity: 1;
+}
+section:last-child {
+    border-bottom: none;
+    margin-bottom: 200px;
+}
+    
+    @font-face {
+    font-family: Dead Kansas;
+    src: url('Dead Kansas.tff')
+    }
+    
+    h3 {
+        font-family: Impact;
+        font-size: 200%;
+    }
+</style>
+
+<div id='map'></div>
+<div id='features'>
+    <section id='atlanta' class='active'>
+        <h3>Atlanta</h3>
+        <p>The year is 2010 and it is an usual and calm day in Georgia, Atlanta in the United States.</p>
+    </section>
+    <section id='lunch'>
+        <h3>Rick and Shane eating lunch</h3>
+        <p>Let's go to Mansfield, where the police officer Rick and his Partner Shane is currently eating lunch in their police cruiser. Suddenly they get a call about a police chase and they instantly go into pursuit.</p>
+    </section>
+    <section id='car-chase'>
+        <h3>Car Chase</h3>
+        <p>Rick and Shane sets off a barricade to block the car at Spears Ln. The car comes in with high speed, and the impact with the spikes makes the car crashes and rolls around untill it finally stops out on the field. supposedly there is no movements at the car so Rick takes his guards down, and right when he does that, one of the criminals jumps out and shoots Rick with a shotgun. He is immediately transported to the Atlanta Bolton Hospital.</p>
+    </section>
+    <section id='hospital'>
+        <h3>Wakes up at Hospital</h3>
+        <p>Bolton Rd Hospital. After what seems like four to five weeks, Rick finally wakes up, only to find himself alone and confused in the Hospital with no living soul except himself. He is slowly making it through the hospital to find another person, when he comes across a barricaded door with the sentence "Dead Inside". When the door begins to rumble and sounds comes from it, he quickly makes his way out of the hospital</p>
+    </section>
+    <section id='bicycle'>
+        <h3>Bicycle girl</h3>
+        <p>On his way to get home to his wife and son he crosses the Grant Park where comes across a fallen girl on a bike. As he comes closer he starts to see, that this is not a person but a disgusting creature. This makes him even more confused, so he hops on the bike.</p>
+    </section>
+    <section id='house'>
+        <h3>Rick's House</h3>
+        <p>Rick has finally arrived at his house only find the whole house and neighborhood empty. Eventually he discovers another man whose name is Morgan and his son. He has so many questions for them but they do not know how to answer them. After sticking with them for awhile, Rick decides to leave to go looking for his wife and son.</p>
+    </section>
+    <section id='station'>
+        <h3>Sheriff's Sation</h3>
+        <p>Before leaving Morgan and his son, he takes them both to the Sheriff's station to pick up some weapons for them and some walkie talkies. He tells Morgan to keep it on at all time, and that he will be calling him every day, at a specific time to keep in touch in case, they change their minds about joining him in finding his family.</p>
+    </section>
+    <section id='atlanta2'>
+        <h3>Car breaks down</h3>
+        <p>On his way to Atlanta City, Rick's car breaks down and he has to walk the rest of the way. Luckily he finds a loose horse on the side of the road which he decideds to ride to Atlanta (Poster for TWD S01)</p>
+    </section>
+    <section>
+    <img src="images/twdlogo.jpg">
+    </section>
+
+    
+</div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1Ijoid2lua2xlcmRrIiwiYSI6ImNqZmpxdXBlejViZDgycWs3bzh5OWtnZ2MifQ.v2lCxs9RlxY5DvYH-_lQ5A';
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/winklerdk/cjfmataq30riq2rmrxqfu93xl',
+    center: [-84.370670 , 33.733143],
+    zoom: 10,
+    bearing: 27,
+    pitch: 45
+});
+
+var chapters = {
+    'atlanta': {
+        bearing: 27,
+        center: [-84.370670, 33.733143],
+        zoom: 15.5,
+        pitch: 20
+    },
+    'lunch': {
+        duration: 6000,
+        center: [-83.73468, 33.51826],
+        bearing: 150,
+        zoom: 15,
+        pitch: 0
+    },
+    'car-chase': {
+        bearing: 90,
+        center: [-83.749751, 33.489208],
+        zoom: 13,
+        speed: 0.6,
+        pitch: 40
+    },
+    'hospital': {
+        bearing: 90,
+        center: [-84.459681, 33.819594],
+        zoom: 15
+    },
+    'bicycle': {
+        bearing: 45,
+        center: [-84.36922, 33.73699],
+        zoom: 15.3,
+        pitch: 20,
+        speed: 0.5
+    },
+    'house': {
+        bearing: 180,
+        center: [-84.37373, 33.73211],
+        zoom: 17
+    },
+    'station': {
+        bearing: 90,
+        center: [-84.42695, 33.80265],
+        zoom: 17.3,
+        pitch: 40
+    },
+    'atlanta2': {
+        bearing: 90,
+        center: [-83.75385, 33.45289],
+        zoom: 13,
+        pitch: 20
+    }
+};
+
+// On every scroll event, check which element is on screen
+window.onscroll = function() {
+    var chapterNames = Object.keys(chapters);
+    for (var i = 0; i < chapterNames.length; i++) {
+        var chapterName = chapterNames[i];
+        if (isElementOnScreen(chapterName)) {
+            setActiveChapter(chapterName);
+            break;
+        }
+    }
+};
+
+var activeChapterName = 'atlanta';
+function setActiveChapter(chapterName) {
+    if (chapterName === activeChapterName) return;
+
+    map.flyTo(chapters[chapterName]);
+
+    document.getElementById(chapterName).setAttribute('class', 'active');
+    document.getElementById(activeChapterName).setAttribute('class', '');
+
+    activeChapterName = chapterName;
+}
+
+function isElementOnScreen(id) {
+    var element = document.getElementById(id);
+    var bounds = element.getBoundingClientRect();
+    return bounds.top < window.innerHeight && bounds.bottom > 0;
+}
+
+    
+var marker = new mapboxgl.Marker()
+    .setLngLat([-83.73468, 33.51826])
+    .addTo(map);
+    
+var marker = new mapboxgl.Marker()
+    .setLngLat([-83.749751, 33.489208])
+    .addTo(map);
+    
+var marker = new mapboxgl.Marker()
+    .setLngLat([-84.459681, 33.819594])
+    .addTo(map);
+
+var marker = new mapboxgl.Marker()
+    .setLngLat([-84.36922, 33.73699])
+    .addTo(map);
+    
+var marker = new mapboxgl.Marker()
+    .setLngLat([-84.37373, 33.73211])
+    .addTo(map);
+    
+var marker = new mapboxgl.Marker()
+    .setLngLat([-83.75385, 33.45289])
+    .addTo(map);
+    
+var marker = new mapboxgl.Marker()
+    .setLngLat([-84.42695, 33.80265])
+    .addTo(map);
+
+</script>
+
+</body>
+</html>
